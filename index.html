@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="author" content="Parth Gadge">
+<title>GameHub.io – free games: vs AI, 2 players, online</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f4f5f9;--cd:#fff;--tx:#12141d;--mu:#667085;--bd:#e3e6ee;--ac:#3b5bfd;--hi:#ff6b4a;--ok:#12b76a}
+[data-t=dark]{--bg:#0d0f16;--cd:#161a25;--tx:#eef0f7;--mu:#97a0b5;--bd:#262c3d;--ac:#6d86ff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:500 16px 'Space Grotesk',system-ui,sans-serif}
+header{display:flex;gap:12px;align-items:center;padding:14px 5vw;position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--bd);z-index:5}
+.logo{font-weight:700;font-size:22px;letter-spacing:-.5px}.logo b{color:var(--ac)}
+input,button{font:inherit;color:inherit}
+#q{flex:1;max-width:320px;margin-left:auto;padding:9px 14px;border-radius:10px;border:1px solid var(--bd);background:var(--cd)}
+.btn{padding:9px 16px;border-radius:10px;border:1px solid var(--bd);background:var(--cd);cursor:pointer}
+.btn.p{background:var(--ac);border-color:var(--ac);color:#fff}.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn:focus-visible,.card:focus-visible,.cell:focus-visible,.disc:focus-visible{outline:3px solid var(--hi);outline-offset:2px}
+main{padding:28px 5vw 60px;max-width:1200px;margin:auto}
+h1{font-size:clamp(32px,5.5vw,58px);letter-spacing:-2px;line-height:1.05;margin:14px 0 8px}
+.sub{color:var(--mu);margin:0 0 22px;max-width:56ch}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}.tabs .btn.on{background:var(--tx);color:var(--bg);border-color:var(--tx)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.card{background:var(--cd);border:1px solid var(--bd);border-radius:16px;padding:18px;cursor:pointer;text-align:left;transition:transform .15s,border-color .15s}
+.card:hover{transform:translateY(-3px);border-color:var(--ac)}.card .ic{font-size:36px}.card h3{margin:10px 0 4px;font-size:18px}.card small{color:var(--mu);display:block;min-height:38px}
+.tag{display:inline-block;font-size:12px;padding:2px 9px;border-radius:99px;background:var(--bg);margin:8px 4px 0 0;color:var(--mu)}
+#modal{position:fixed;inset:0;background:#0009;display:none;place-items:center;z-index:9;padding:14px}#modal.on{display:grid}
+.box{background:var(--cd);border-radius:20px;padding:20px;width:min(600px,100%);max-height:94vh;overflow:auto}
+.mh{display:flex;gap:8px;align-items:center;margin-bottom:8px}.mh h2{margin:0 auto 0 0;font-size:22px}
+.status{text-align:center;color:var(--mu);margin:10px 0;min-height:24px}
+.row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:10px 0}
+.big{font-size:18px;padding:14px 20px;width:100%;margin:6px 0}.row .big{width:auto;font-size:38px}
+.bd{display:grid;gap:8px;margin:10px auto;max-width:420px}.t3{grid-template-columns:repeat(3,1fr)}.m4{grid-template-columns:repeat(4,1fr)}
+.c4{grid-template-columns:repeat(7,1fr);gap:5px;background:var(--bd);padding:8px;border-radius:14px}
+.cell{aspect-ratio:1;font:700 34px 'Space Grotesk';border:1px solid var(--bd);background:var(--bg);border-radius:12px;cursor:pointer}
+.cell.c0{color:var(--ac)}.cell.c1{color:var(--hi)}.cell.dn{opacity:.4}
+.disc{aspect-ratio:1;border-radius:50%;border:0;background:var(--bg);cursor:pointer}.disc.c0{background:var(--ac)}.disc.c1{background:var(--hi)}
+.cv{display:block;max-width:100%;margin:auto;border:1px solid var(--bd);border-radius:14px}
+.rx{width:100%;height:260px;border:0;border-radius:16px;font-size:22px;color:#fff;background:var(--ac);cursor:pointer}.rx.w{background:#d92d20}.rx.g{background:var(--ok)}
+.in{padding:12px;border-radius:10px;border:1px solid var(--bd);background:var(--bg);width:120px;text-transform:uppercase;text-align:center;font-size:20px}
+.code{font-size:38px;letter-spacing:7px;color:var(--ac)}.shop{display:grid;gap:8px;margin-top:10px}.shop .btn{text-align:left}
+footer{text-align:center;color:var(--mu);padding:26px 5vw 40px;border-top:1px solid var(--bd);font-size:14px}
+.dn{opacity:.4}.cv{cursor:crosshair;touch-action:none}
+.dg{grid-template-columns:12px 1fr 12px 1fr 12px 1fr 12px;grid-template-rows:12px 1fr 12px 1fr 12px 1fr 12px;aspect-ratio:1;max-width:340px;gap:2px}
+.dt{width:12px;height:12px;border-radius:50%;background:var(--tx);justify-self:center;align-self:center}
+.ed{border:0;border-radius:6px;background:var(--bd);cursor:pointer;padding:0}.ed:hover{filter:brightness(.85)}.ed.c0{background:var(--ac)}.ed.c1{background:var(--hi)}
+.bx.c0{background:#3b5bfd33}.bx.c1{background:#ff6b4a33}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body>
+<header><div class="logo">GameHub<b>.io</b></div><input id="q" placeholder="Search games" aria-label="Search games"><button class="btn" id="th" aria-label="Toggle theme">🌓</button></header>
+<main><h1>Pick a game.<br>Play it your way.</h1>
+<p class="sub" id="sub">Free browser games. Beat the AI, share one keyboard, or play a friend online with a 4-letter room code.</p>
+<div class="tabs" id="tabs"></div><div class="grid" id="grid"></div></main>
+<footer>© 2026 Parth Gadge. All rights reserved. GameHub.io</footer>
+<div id="modal"><div class="box" role="dialog" aria-modal="true"><div class="mh"><h2 id="mt"></h2><button class="btn" id="rs">↻ Restart</button><button class="btn" id="cl" aria-label="Close">✕</button></div><div id="body"></div></div></div>
+<script>
+const $=s=>document.querySelector(s),E=(t,c,h)=>{const e=document.createElement(t);if(c)e.className=c;if(h!=null)e.innerHTML=h;return e};
+/* ---------- online (free WebRTC via PeerJS public broker) ---------- */
+const Net={load(){return this.r||(this.r=new Promise((ok,no)=>{const s=E('script');s.src='https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js';s.onload=ok;s.onerror=no;document.head.append(s)}))},
+ async host(cb){this.stop();await this.load();const code=Math.random().toString(36).slice(2,6).toUpperCase(),p=new Peer('ghub-'+code);p.on('open',()=>cb.code(code));p.on('connection',c=>this.wire(c,0,cb));p.on('error',cb.err);this.p=p},
+ async join(code,cb){this.stop();await this.load();const p=new Peer();p.on('open',()=>this.wire(p.connect('ghub-'+code.toUpperCase(),{reliable:true}),1,cb));p.on('error',cb.err);this.p=p},
+ wire(c,role,cb){const n={role,send:d=>c.open&&c.send(d),onmsg:()=>{}};c.on('open',()=>cb.ready(n));c.on('data',d=>n.onmsg(d));c.on('close',()=>cb.err({message:'Opponent left'}))},
+ stop(){this.p&&this.p.destroy();this.p=null}};
+/* ---------- turn-based engine: AI, same-PC duo, online ---------- */
+function turn(root,mode,net,g){let s=g.init(),p=0,over=null,dead=0;const me=net?net.role:0;
+ const st=E('p','status'),bd=E('div'),ag=E('button','btn p','Play again');root.append(st,bd,ag);
+ const nm=i=>mode=='duo'?'Player '+(i+1):net?(i==me?'You':'Opponent'):(i?'AI':'You');
+ function draw(){g.render(s,bd,click,me,p);st.textContent=over==null?(nm(p)=='You'?'Your turn':nm(p)=='AI'?'AI is thinking…':nm(p)+"'s turn"):over=='d'?'Draw!':nm(over)+' won 🎉';ag.style.display=over!=null&&net?'':'none'}
+ function apply(m){const o=s;s=g.play(s,m,p);const w=g.winner(s);if(w!=null)over=w;else if(!(g.again&&g.again(o,s)))p=1-p;draw();if(over==null&&mode=='ai'&&p==1)setTimeout(()=>!dead&&apply(g.ai(s)),450)}
+ function click(m){if(over!=null||dead)return;if(net){if(p!=me)return}else if(mode=='ai'&&p==1)return;if(!g.legal(s,p).includes(m))return;net&&net.send({m});apply(m)}
+ const reset=()=>{s=g.init();p=0;over=null;draw()};ag.onclick=()=>{net.send({r:1});reset()};
+ if(net)net.onmsg=d=>d.r?reset():apply(d.m);draw();return()=>dead=1}
+const L=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+const ttt={init:()=>Array(9).fill(null),legal:s=>s.map((v,i)=>v==null?i:-1).filter(i=>i>=0),play:(s,m,p)=>{s=s.slice();s[m]=p;return s},
+ winner:s=>{for(const[a,b,c]of L)if(s[a]!=null&&s[a]==s[b]&&s[b]==s[c])return s[a];return s.includes(null)?null:'d'},
+ render:(s,b,k)=>{b.className='bd t3';b.innerHTML='';s.forEach((v,i)=>{const c=E('button','cell c'+v,v==null?'':v?'O':'X');c.setAttribute('aria-label','cell '+(i+1));c.onclick=()=>k(i);b.append(c)})},
+ ai(s){const l=this.legal(s);if(Math.random()<.15)return l[Math.random()*l.length|0];let b=-9,mv;for(const m of l){const v=mm(this.play(s,m,1),0);if(v>b){b=v;mv=m}}return mv}};
+const mm=(s,p)=>{const w=ttt.winner(s);if(w!=null)return w=='d'?0:w==1?1:-1;let r=p?-9:9;for(const m of ttt.legal(s)){const v=mm(ttt.play(s,m,p),1-p);r=p?Math.max(r,v):Math.min(r,v)}return r};
+const c4={init:()=>Array(42).fill(null),legal:s=>[0,1,2,3,4,5,6].filter(c=>s[c]==null),
+ play:(s,c,p)=>{s=s.slice();for(let r=5;r>=0;r--)if(s[r*7+c]==null){s[r*7+c]=p;break}return s},
+ winner:s=>{for(let r=0;r<6;r++)for(let c=0;c<7;c++){const v=s[r*7+c];if(v==null)continue;for(const[a,b]of[[0,1],[1,0],[1,1],[1,-1]]){let n=1;while(n<4){const R=r+a*n,C=c+b*n;if(R<0||R>5||C<0||C>6||s[R*7+C]!==v)break;n++}if(n==4)return v}}return s.includes(null)?null:'d'},
+ render:(s,b,k)=>{b.className='bd c4';b.innerHTML='';s.forEach((v,i)=>{const c=E('button','disc c'+v);c.setAttribute('aria-label','column '+(i%7+1));c.onclick=()=>k(i%7);b.append(c)})},
+ ai(s){const l=this.legal(s);for(const p of[1,0])for(const c of l)if(this.winner(this.play(s,c,p))===p)return c;return l.sort((a,b)=>Math.abs(a-3)-Math.abs(b-3)+(Math.random()-.5)*2)[0]}};
+/* ---------- other games ---------- */
+function rps(root,mode,net){const O=['🪨','📄','✂️'],n=mode=='duo'?['Player 1','Player 2']:['You',mode=='ai'?'AI':'Friend'];let sc=[0,0],pk=[],step=0;
+ const st=E('p','status','Choose your move'),sb=E('p','status',`${n[0]} 0 : 0 ${n[1]}`),row=E('div','row');root.append(sb,st,row);
+ O.forEach((o,i)=>{const b=E('button','btn big',o);b.onclick=()=>pick(i);row.append(b)});
+ function pick(i){if(mode=='duo'){if(!step){pk[0]=i;step=1;st.textContent='Player 2, choose (no peeking!)';return}pk[1]=i;step=0;show()}else if(mode=='ai'){pk=[i,Math.random()*3|0];show()}else{pk[0]=i;net.send({r:i});chk()}}
+ function chk(){pk[0]!=null&&pk[1]!=null?show():st.textContent='Waiting for opponent…'}
+ function show(){const[a,b]=pk,r=(a-b+3)%3;if(r)sc[r-1]++;st.textContent=`${O[a]} vs ${O[b]} — ${r?n[r-1]+' wins the round':'draw'}`;sb.textContent=`${n[0]} ${sc[0]} : ${sc[1]} ${n[1]}`;pk=[]}
+ if(net)net.onmsg=m=>{pk[1]=m.r;chk()}}
+function pong(root,mode){const c=E('canvas','cv'),h=E('p','status',mode=='duo'?'Player 1: W / S · Player 2: ↑ / ↓ · first to 7':'W / S to move · first to 7');c.width=640;c.height=400;root.append(h,c);
+ const x=c.getContext('2d');let k={},p=[170,170],sc=[0,0],run=1,b,raf;const rs=d=>b={x:320,y:200,vx:4*d,vy:(Math.random()-.5)*5};rs(1);
+ const kd=e=>{k[e.key]=1;if(e.key.startsWith('Arrow'))e.preventDefault()},ku=e=>k[e.key]=0;addEventListener('keydown',kd);addEventListener('keyup',ku);
+ (function loop(){if(!run)return;if(k.w)p[0]-=6;if(k.s)p[0]+=6;if(mode=='duo'){if(k.ArrowUp)p[1]-=6;if(k.ArrowDown)p[1]+=6}else p[1]+=Math.max(-3.6,Math.min(3.6,b.y-p[1]-30));
+  p=p.map(v=>Math.max(0,Math.min(340,v)));b.x+=b.vx;b.y+=b.vy;if(b.y<0||b.y>394)b.vy*=-1;
+  [[10,0],[622,1]].forEach(([px,i])=>{if(b.x>px-6&&b.x<px+18&&b.y>p[i]&&b.y<p[i]+60&&(i?b.vx>0:b.vx<0)){b.vx*=-1.08;b.vy+=(b.y-p[i]-30)/8}});
+  if(b.x<0){sc[1]++;rs(1)}if(b.x>640){sc[0]++;rs(-1)}
+  x.clearRect(0,0,640,400);x.fillStyle=getComputedStyle(document.body).color;x.font='700 40px Space Grotesk';x.fillText(sc[0],250,50);x.fillText(sc[1],370,50);x.fillRect(b.x-5,b.y-5,10,10);
+  x.fillStyle='#3b5bfd';x.fillRect(10,p[0],8,60);x.fillStyle='#ff6b4a';x.fillRect(622,p[1],8,60);
+  if(sc[0]>6||sc[1]>6){run=0;h.textContent=(sc[0]>6?(mode=='duo'?'Player 1':'You'):(mode=='duo'?'Player 2':'AI'))+' won! Press Restart to play again.';return}raf=requestAnimationFrame(loop)})();
+ return()=>{run=0;cancelAnimationFrame(raf);removeEventListener('keydown',kd);removeEventListener('keyup',ku)}}
+function snake(root){const c=E('canvas','cv'),st=E('p','status','Score 0 · arrow keys / WASD');c.width=c.height=400;root.append(st,c);const x=c.getContext('2d');
+ let s=[[10,10]],d=[1,0],nd=d,f=[5,5],sc=0;
+ const kd=e=>{const m={ArrowUp:[0,-1],w:[0,-1],ArrowDown:[0,1],s:[0,1],ArrowLeft:[-1,0],a:[-1,0],ArrowRight:[1,0],d:[1,0]}[e.key];if(m&&(m[0]+d[0]||m[1]+d[1])){nd=m;e.preventDefault()}};addEventListener('keydown',kd);
+ const t=setInterval(()=>{d=nd;const h=[s[0][0]+d[0],s[0][1]+d[1]];if(h[0]<0||h[1]<0||h[0]>19||h[1]>19||s.some(q=>q[0]==h[0]&&q[1]==h[1])){st.textContent='Game over · score '+sc+' · press Restart';clearInterval(t);return}
+  s.unshift(h);if(h[0]==f[0]&&h[1]==f[1]){sc++;st.textContent='Score '+sc;f=[Math.random()*20|0,Math.random()*20|0]}else s.pop();
+  x.clearRect(0,0,400,400);x.fillStyle='#ff6b4a';x.fillRect(f[0]*20+3,f[1]*20+3,14,14);x.fillStyle='#3b5bfd';s.forEach(q=>x.fillRect(q[0]*20+1,q[1]*20+1,18,18))},110);
+ return()=>{clearInterval(t);removeEventListener('keydown',kd)}}
+function memory(root,mode){const e8=['🚀','🌵','🍕','🎸','🦊','🌋','🧩','🛸'],d=[...e8,...e8].sort(()=>Math.random()-.5);let open=[],done=[],p=0,sc=[0,0],lock=0,mv=0;
+ const st=E('p','status'),g=E('div','bd m4');root.append(st,g);
+ function draw(){g.innerHTML='';d.forEach((v,i)=>{const b=E('button','cell'+(done[i]?' dn':''),open.includes(i)||done[i]?v:'?');b.onclick=()=>flip(i);g.append(b)});
+  st.textContent=(mode=='duo'?`Player ${p+1}'s turn · ${sc[0]} : ${sc[1]}`:`Moves ${mv} · pairs ${sc[0]}/8`)+(sc[0]+sc[1]==8?' · Finished!':'')}
+ function flip(i){if(lock||open.includes(i)||done[i])return;open.push(i);draw();if(open.length==2){mv++;lock=1;const[a,b]=open;setTimeout(()=>{if(d[a]==d[b]){done[a]=done[b]=1;sc[p]++}else if(mode=='duo')p=1-p;open=[];lock=0;draw()},700)}}draw()}
+function react(root){const b=E('button','rx','Click to start');root.append(b);let st=0,t0,to,best=localStorage.rx;
+ b.onclick=()=>{if(!st){st=1;b.textContent='Wait for green…';b.className='rx w';to=setTimeout(()=>{st=2;b.className='rx g';b.textContent='CLICK!';t0=performance.now()},1000+Math.random()*3000)}
+  else if(st==1){clearTimeout(to);st=0;b.className='rx';b.textContent='Too early. Click to retry'}
+  else{const t=Math.round(performance.now()-t0);st=0;b.className='rx';if(!best||t<best)localStorage.rx=best=t;b.textContent=`${t} ms · best ${best} ms. Click to go again`}};return()=>clearTimeout(to)}
+/* ---------- more games ---------- */
+const cnt=s=>s.b.filter(v=>v!=null).length,bxs=(r,c)=>[r*3+c,(r+1)*3+c,12+r*4+c,13+r*4+c];
+const dots={init:()=>({e:Array(24).fill(null),b:Array(9).fill(null)}),legal:s=>s.e.map((v,i)=>v==null?i:-1).filter(i=>i>=0),
+ play:(s,m,p)=>{const e=s.e.slice(),b=s.b.slice();e[m]=p;for(let r=0;r<3;r++)for(let c=0;c<3;c++)if(b[r*3+c]==null&&bxs(r,c).every(i=>e[i]!=null))b[r*3+c]=p;return{e,b}},
+ again:(a,n)=>cnt(n)>cnt(a),winner:s=>cnt(s)<9?null:s.b.filter(v=>v==0).length>4?0:1,
+ render:(s,bd,k)=>{bd.className='bd dg';bd.innerHTML='';for(let R=0;R<7;R++)for(let C=0;C<7;C++){let el;
+  if(R%2==0&&C%2==0)el=E('i','dt');else if(R%2&&C%2)el=E('div','bx c'+s.b[(R>>1)*3+(C>>1)]);
+  else{const i=R%2==0?(R/2)*3+(C-1)/2:12+((R-1)/2)*4+C/2;el=E('button','ed c'+s.e[i]);el.setAttribute('aria-label','line');el.onclick=()=>k(i)}bd.append(el)}},
+ ai(s){const l=this.legal(s);let best=0,g=0;for(const m of l){const gain=cnt(this.play(s,m,1))-cnt(s);if(gain>g){g=gain;best=m}}if(g)return best;
+  const safe=l.filter(m=>{const n=this.play(s,m,1);for(let r=0;r<3;r++)for(let c=0;c<3;c++)if(n.b[r*3+c]==null&&bxs(r,c).filter(i=>n.e[i]!=null).length==3)return false;return true});
+  const pool=safe.length?safe:l;return pool[Math.random()*pool.length|0]}};
+let chs=null;
+const chop={init:()=>[1,1,1,1],
+ legal:(s,p)=>{const r=[],x=s[p*2],y=s[p*2+1],t=x+y;for(let a=0;a<2;a++)for(let b=0;b<2;b++)if(s[p*2+a]&&s[(1-p)*2+b])r.push(a*2+b);for(let k=0;k<=4;k++)if(t-k>=0&&t-k<=4&&!(k==x&&t-k==y)&&!(k==y&&t-k==x))r.push(10+k);return r},
+ play:(s,m,p)=>{s=s.slice();if(m<10){const t=(1-p)*2+(m&1);s[t]+=s[p*2+(m>>1)];if(s[t]>4)s[t]=0}else{const t=s[p*2]+s[p*2+1];s[p*2]=m-10;s[p*2+1]=t-(m-10)}return s},
+ winner:s=>s[0]+s[1]==0?1:s[2]+s[3]==0?0:null,
+ render(s,b,k,me,p){b.className='bd';b.innerHTML='';const again=()=>this.render(s,b,k,me,p);
+  for(const o of[1-me,me]){const r=E('div','row');for(let h=0;h<2;h++){const v=s[o*2+h],x=E('button','btn'+(o==p&&chs===h?' p':'')+(v?'':' dn'),v?'✋ '+v:'💀');x.style.cssText='font-size:30px;padding:16px 26px';
+   x.onclick=()=>{if(o==p){chs=v?h:null;again()}else if(chs!=null){const m=chs*2+h;chs=null;k(m)}};r.append(x)}b.append(r)}
+  const sp=E('div','row');this.legal(s,p).filter(m=>m>=10).forEach(m=>{const x=E('button','btn','Split '+(m-10)+' | '+(s[p*2]+s[p*2+1]-m+10));x.onclick=()=>{chs=null;k(m)};sp.append(x)});b.append(sp)},
+ ai(s){const l=this.legal(s,1);let best=l[0],bv=-9;for(const m of l){const n=this.play(s,m,1);if(this.winner(n)===1)return m;const v=(n[0]==0)+(n[1]==0)-.6*((n[2]==0)+(n[3]==0))+Math.random();if(v>bv){bv=v;best=m}}return best}};
+function shooter(root){const c=E('canvas','cv'),h=E('p','status','Move mouse / finger or use ← → · auto-fire');c.width=480;c.height=520;root.append(h,c);const x=c.getContext('2d');
+ let px=240,B=[],N=[],sc=0,f=0,run=1,raf;const best=+localStorage.shb||0;
+ const mv=e=>{const r=c.getBoundingClientRect(),t=e.touches?e.touches[0]:e;px=(t.clientX-r.left)*480/r.width};c.addEventListener('mousemove',mv);c.addEventListener('touchmove',mv);
+ const kd=e=>{if(e.key=='ArrowLeft'||e.key=='a')px-=24;if(e.key=='ArrowRight'||e.key=='d')px+=24;if(e.key.startsWith('Arrow'))e.preventDefault()};addEventListener('keydown',kd);
+ (function loop(){if(!run)return;f++;if(f%12==0)B.push([px,480]);if(f%Math.max(14,45-sc)==0)N.push([Math.random()*440+20,-20,1+Math.random()*1.5+sc/40]);
+  B=B.map(b=>[b[0],b[1]-8]).filter(b=>b[1]>0);N.forEach(n=>n[1]+=n[2]);let over=0;
+  N=N.filter(n=>{const i=B.findIndex(b=>Math.abs(b[0]-n[0])<20&&Math.abs(b[1]-n[1])<20);if(i>=0){B.splice(i,1);sc++;return false}if(n[1]>=490)over=1;return n[1]<490});
+  x.clearRect(0,0,480,520);x.fillStyle='#ff6b4a';N.forEach(n=>x.fillRect(n[0]-14,n[1]-14,28,28));x.fillStyle='#3b5bfd';B.forEach(b=>x.fillRect(b[0]-2,b[1],4,12));x.beginPath();x.moveTo(px,480);x.lineTo(px-18,515);x.lineTo(px+18,515);x.fill();
+  x.fillStyle=getComputedStyle(document.body).color;x.font='700 20px Space Grotesk';x.fillText('Score '+sc+'  Best '+Math.max(best,sc),12,26);
+  if(over){run=0;if(sc>best)localStorage.shb=sc;h.textContent='Game over · score '+sc+' · press Restart';return}raf=requestAnimationFrame(loop)})();
+ return()=>{run=0;cancelAnimationFrame(raf);removeEventListener('keydown',kd)}}
+function target(root){const c=E('canvas','cv'),h=E('p','status','Click the targets. Smaller = more points · 30 seconds');c.width=640;c.height=400;root.append(h,c);const x=c.getContext('2d');let T=[],sc=0,t=30,run=1;
+ c.onclick=e=>{if(!run)return;const r=c.getBoundingClientRect(),mx=(e.clientX-r.left)*640/r.width,my=(e.clientY-r.top)*400/r.height,i=T.findIndex(q=>Math.hypot(q.x-mx,q.y-my)<q.r);if(i>=0){sc+=Math.ceil(40/T[i].r);T.splice(i,1)}else sc=Math.max(0,sc-1)};
+ const iv=setInterval(()=>{if(Math.random()<.06)T.push({x:40+Math.random()*560,y:40+Math.random()*320,r:36});T.forEach(q=>q.r-=.35);T=T.filter(q=>q.r>4);x.clearRect(0,0,640,400);
+  T.forEach(q=>[1,.66,.33].forEach((f,j)=>{x.fillStyle=j%2?'#fff':'#ff6b4a';x.beginPath();x.arc(q.x,q.y,q.r*f,0,7);x.fill()}));
+  x.fillStyle=getComputedStyle(document.body).color;x.font='700 22px Space Grotesk';x.fillText('Score '+sc+' · '+Math.ceil(t)+'s',12,28);t-=.04;
+  if(t<=0){clearInterval(iv);run=0;h.textContent='Time! Final score '+sc+' · press Restart'}},40);return()=>clearInterval(iv)}
+function race(root){const c=E('canvas','cv'),h=E('p','status','← → or A / D to switch lanes · tap left / right on phones');c.width=360;c.height=520;root.append(h,c);const x=c.getContext('2d');
+ let lane=1,cars=[],d=0,sp=5,f=0,run=1,raf,off=0;const go=v=>lane=Math.max(0,Math.min(2,lane+v)),col=['#e5484d','#f5a524','#12b76a','#8b5cf6'];
+ const kd=e=>{if(e.key=='ArrowLeft'||e.key=='a')go(-1);if(e.key=='ArrowRight'||e.key=='d')go(1);if(e.key.startsWith('Arrow'))e.preventDefault()};addEventListener('keydown',kd);
+ c.onpointerdown=e=>{const r=c.getBoundingClientRect();go(e.clientX-r.left<r.width/2?-1:1)};
+ const car=(l,y,co)=>{x.fillStyle=co;x.fillRect(l*120+30,y,60,90);x.fillStyle='#0008';x.fillRect(l*120+38,y+14,44,22)};
+ (function loop(){if(!run)return;f++;d+=sp/10;sp=Math.min(14,5+d/150);off=(off+sp)%40;
+  if(f%Math.max(22,60-(sp*3|0))==0)cars.push({l:Math.random()*3|0,y:-90,c:col[Math.random()*4|0]});cars.forEach(q=>q.y+=sp*.7);cars=cars.filter(q=>q.y<540);
+  x.fillStyle='#2b2f3b';x.fillRect(0,0,360,520);x.fillStyle='#fff';for(let y=-40+off;y<520;y+=40){x.fillRect(118,y,4,22);x.fillRect(238,y,4,22)}
+  cars.forEach(q=>car(q.l,q.y,q.c));car(lane,410,'#3b5bfd');x.fillStyle='#fff';x.font='700 20px Space Grotesk';x.fillText(Math.floor(d)+' m · '+Math.round(sp*14)+' km/h',12,28);
+  if(cars.some(q=>q.l==lane&&q.y>320&&q.y<500)){run=0;h.textContent='Crash! '+Math.floor(d)+' m · press Restart';return}raf=requestAnimationFrame(loop)})();
+ return()=>{run=0;cancelAnimationFrame(raf);removeEventListener('keydown',kd)}}
+function mole(root){const st=E('p','status'),g=E('div','bd t3');root.append(st,g);let sc=0,t=30,m=-1;
+ const cells=[...Array(9)].map((_,i)=>{const b=E('button','cell');b.onclick=()=>{if(i==m&&t>0){sc++;m=-1;paint()}};g.append(b);return b});
+ const paint=()=>{cells.forEach((b,i)=>b.textContent=i==m?'🐹':'');st.textContent=`Score ${sc} · ${Math.ceil(t)}s`};
+ const iv=setInterval(()=>{t-=.7;if(t<=0){t=0;m=-1;clearInterval(iv);paint();st.textContent='Time! Score '+sc+' · press Restart';return}m=Math.random()*9|0;paint()},700);paint();return()=>clearInterval(iv)}
+function cafe(root){let S;try{S=JSON.parse(localStorage.cafe2)}catch(e){}S=S||{cash:300,day:1,rep:40,beans:40,milk:30,bar:1,gr:0,pr:[3,5,4.2],w:0};
+ const M=[['Espresso',3,1,0],['Latte',5,1,1],['Cappuccino',4.2,1,.6]],W=[['☀️ Sunny',1,[.4,.3,.3]],['🌧️ Rainy',.7,[.2,.5,.3]],['❄️ Cold',.85,[.15,.5,.35]]],cl=(v,a,b)=>Math.max(a,Math.min(b,v));
+ let run=0,t,log=['Set prices, check stock, then open the shop. Staff, rent and weather all matter.'];const top=E('p','status'),menu=E('div','shop'),shop=E('div','shop'),lg=E('p','status');root.append(top,menu,shop,lg);
+ const save=()=>localStorage.cafe2=JSON.stringify(S);
+ function draw(){top.innerHTML=`<b>Day ${S.day}</b> · ${W[S.w][0]} · 💰 $${S.cash.toFixed(2)} · ⭐ ${Math.round(S.rep)}/100<br>Beans ${S.beans.toFixed(0)} · Milk ${S.milk.toFixed(0)} · Baristas ${S.bar} · Grinder lvl ${S.gr}`;menu.innerHTML='';
+  M.forEach((m,i)=>{const r=E('div','row'),a=E('button','btn','−'),b=E('button','btn','+'),l=E('span','',`${m[0]} $${S.pr[i].toFixed(2)} (fair ~$${m[1]})`);a.onclick=()=>{S.pr[i]=Math.max(1,S.pr[i]-.25);draw()};b.onclick=()=>{S.pr[i]+=.25;draw()};a.disabled=b.disabled=run;r.append(a,l,b);menu.append(r)});
+  shop.innerHTML='';[['Buy 20 beans · $18',18,()=>S.beans+=20],['Buy 20 milk · $12',12,()=>S.milk+=20],['Hire barista · $150 (+$25/day wage)',150,()=>S.bar++,S.bar>=4],['Better grinder · $200',200,()=>S.gr++,S.gr>=3]].forEach(([n,c,f,mx])=>{const b=E('button','btn',n);b.disabled=run||S.cash<c||mx;b.onclick=()=>{S.cash-=c;f();save();draw()};shop.append(b)});
+  const o=E('button','btn p big',run?'Shop is open…':'Open the shop');o.disabled=run;o.onclick=day;shop.append(o);lg.innerHTML=log.slice(-8).join('<br>')}
+ function day(){run=1;let h=8,rev=0,sold=0,lost=0;const w=W[S.w];log=[];draw();
+  t=setInterval(()=>{const rush=[8,9,12,13,17].includes(h)?2:1,cap=9*S.bar+4*S.gr,n=Math.round((7+Math.random()*4)*rush*(.5+S.rep/100)*w[1]);let s=0,l=0;
+   for(let i=0;i<n;i++){if(s>=cap){l++;continue}const r=Math.random(),k=r<w[2][0]?0:r<w[2][0]+w[2][1]?1:2,m=M[k],p=S.pr[k];
+    if(Math.random()>cl(1-(p-m[1])/m[1]*1.3,.05,1))continue;if(S.beans<m[2]||S.milk<m[3]){l++;continue}S.beans-=m[2];S.milk-=m[3];S.cash+=p;rev+=p;s++}
+   sold+=s;lost+=l;log.push(`${h}:00 · ${n} customers · served ${s}${l?' · lost '+l+' (queue or stock)':''}`);h++;
+   if(h>19){clearInterval(t);const cost=40+25*S.bar;S.cash-=cost;S.rep=cl(S.rep+sold*.04*(1+.3*S.gr)-lost*.08,5,100);
+    log.push(`<b>Closed.</b> Sales $${rev.toFixed(2)} · rent + wages $${cost}${S.cash<0?' · ⚠️ you are in debt':''}`);S.day++;S.w=Math.random()*3|0;run=0;save()}draw()},700)}
+ draw();return()=>clearInterval(t)}
+/* ---------- game registry: add a game = add one line ---------- */
+const G=[
+{n:'Tic-Tac-Toe',i:'❌',c:'Strategy',m:['ai','duo','online'],d:'Classic 3×3 duel. The AI rarely slips.',s:(r,m,n)=>turn(r,m,n,ttt)},
+{n:'Connect Four',i:'🔴',c:'Strategy',m:['ai','duo','online'],d:'Drop discs, line up four.',s:(r,m,n)=>turn(r,m,n,c4)},
+{n:'Rock Paper Scissors',i:'✂️',c:'Strategy',m:['ai','duo','online'],d:'Best-of-forever mind games.',s:rps},
+{n:'Pong',i:'🏓',c:'Arcade',m:['ai','duo'],d:'First to 7. Two paddles, one keyboard.',s:pong},
+{n:'Snake',i:'🐍',c:'Arcade',m:['solo'],d:'Eat, grow, don’t bite yourself.',s:snake},
+{n:'Reaction Time',i:'⚡',c:'Arcade',m:['solo'],d:'How fast are you? Best score is saved.',s:react},
+{n:'Memory Match',i:'🧠',c:'Puzzle',m:['solo','duo'],d:'Find all 8 pairs, alone or in turns.',s:memory},
+{n:'Dots & Boxes',i:'🔲',c:'Strategy',m:['ai','duo','online'],d:'Draw lines, close boxes, move again.',s:(r,m,n)=>turn(r,m,n,dots)},
+{n:'Chopsticks',i:'✋',c:'Strategy',m:['ai','duo','online'],d:'Tap, split, knock out both hands.',s:(r,m,n)=>turn(r,m,n,chop)},
+{n:'Space Shooter',i:'🚀',c:'Shooting',m:['solo'],d:'Blast falling invaders. Best score saved.',s:shooter},
+{n:'Target Practice',i:'🎯',c:'Shooting',m:['solo'],d:'30 seconds. Small targets pay more.',s:target},
+{n:'Highway Rush',i:'🏎️',c:'Racing',m:['solo'],d:'Dodge traffic as the speed climbs.',s:race},
+{n:'Whack-a-Mole',i:'🐹',c:'Arcade',m:['solo'],d:'Fast reflexes, 30 seconds.',s:mole},
+{n:'Coffee Shop Sim',i:'☕',c:'Simulator',m:['solo'],d:'Run a café: prices, stock, staff, weather.',s:cafe}];
+const tg={ai:'vs AI',duo:'2 players',online:'Online',solo:'Solo'},TABS=['All','Online','Strategy','Arcade','Shooting','Racing','Puzzle','Simulator'];let tab='All',qs='',cur=null,last=null;
+function render(){const g=$('#grid');g.innerHTML='';G.filter(x=>(tab=='All'||x.c==tab||(tab=='Online'&&x.m.includes('online')))&&x.n.toLowerCase().includes(qs)).forEach(x=>{
+ const b=E('button','card',`<div class=ic>${x.i}</div><h3>${x.n}</h3><small>${x.d}</small><div>${x.m.map(m=>`<span class=tag>${tg[m]}</span>`).join('')}</div>`);b.onclick=()=>menu(x);g.append(b)});
+ if(!g.children.length)g.append(E('p','sub','No games match. Try another word or category.'));
+ $('#tabs').innerHTML='';TABS.forEach(t=>{const b=E('button','btn'+(t==tab?' on':''),t);b.onclick=()=>{tab=t;render()};$('#tabs').append(b)})}
+function stop(){cur&&cur();cur=null}
+function menu(g){stop();last=null;$('#modal').classList.add('on');$('#mt').textContent=g.n;$('#rs').style.display='none';const B=$('#body');B.innerHTML='';
+ const lab={ai:'🤖 Play vs AI',duo:'👥 Two players, one PC',online:'🌐 Play online with a room code',solo:'▶ Play'};
+ g.m.forEach(m=>{const b=E('button','btn big'+(m=='ai'||m=='solo'?' p':''),lab[m]);b.onclick=()=>m=='online'?lobby(g):start(g,m);B.append(b)})}
+function start(g,m,net){stop();const B=$('#body');B.innerHTML='';const r=E('div');B.append(r);cur=g.s(r,m,net);last=[g,m,net];$('#rs').style.display=net?'none':''}
+function lobby(g){const B=$('#body');B.innerHTML='';const info=E('p','status','Create a room, or join a friend’s room with their code.'),h=E('button','btn p big','Create room'),row=E('div','row'),inp=E('input','in'),j=E('button','btn','Join');
+ inp.placeholder='CODE';inp.maxLength=4;inp.setAttribute('aria-label','Room code');row.append(inp,j);B.append(info,h,row);
+ const cb={code:c=>info.innerHTML=`Room code<br><b class=code>${c}</b><br>Share it. The game starts when your friend joins.`,ready:n=>start(g,'online',n),err:e=>info.textContent='Connection problem: '+(e.type||e.message||'try again')};
+ h.onclick=()=>{info.textContent='Creating room…';Net.host(cb)};j.onclick=()=>{if(inp.value.length==4){info.textContent='Joining…';Net.join(inp.value,cb)}else info.textContent='Enter the 4-letter code.'}}
+$('#rs').onclick=()=>last&&start(...last);
+$('#cl').onclick=()=>{stop();Net.stop();$('#modal').classList.remove('on')};addEventListener('keydown',e=>e.key=='Escape'&&$('#cl').click());
+$('#q').oninput=e=>{qs=e.target.value.toLowerCase();render()};
+const th=localStorage.th||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light'),setT=t=>{document.documentElement.dataset.t=t;localStorage.th=t};setT(th);$('#th').onclick=()=>setT(document.documentElement.dataset.t=='dark'?'light':'dark');
+$('#sub').textContent=G.length+' free games. Beat the AI, share one keyboard, or play a friend online with a 4-letter room code.';render();
+</script></body></html>
