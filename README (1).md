@@ -8,7 +8,7 @@
 ![Deploy](https://img.shields.io/badge/deploy-Vercel%20%2F%20GitHub%20Pages-000?style=for-the-badge)
 ![No backend](https://img.shields.io/badge/backend-none-8b5cf6?style=for-the-badge)
 
-**[▶ Play now](https://YOUR-PROJECT.vercel.app)** · **[Report a bug](../../issues)** · **[Request a game](../../issues)**
+**[▶ Play now]([https://YOUR-PROJECT.vercel.app](https://parthgadge2025.github.io/GameHub.io/))** · **[Report a bug](../../issues)** · **[Request a game](../../issues)**
 
 </div>
 
